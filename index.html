@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stilletos Decor & Catering | Rustenburg Event Styling &amp; Kids Parties</title>
+  <link rel="shortcut icon" href="assets/images/StilletosLogo.jpeg" type="image/x-icon">
+  <meta name="description"
+    content="Rustenburg's premier event styling studio. Bespoke black-and-gold decor for adult celebrations and whimsical themed party packages for kids, based in Chaneng.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Baloo+2:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/adult-theme.css">
+  <link rel="stylesheet" href="css/kids-theme.css">
+  <link rel="stylesheet" href="css/cart.css">
+</head>
+
+<body class="experience-adult">
+
+  <!-- TRANSITION CURTAIN -->
+  <div id="curtain" class="curtain to-kids" aria-hidden="true">
+    <div class="curtain-content">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z" />
+      </svg>
+      <h2 class="curtain-title" id="curtain-title">Stilletos Kids</h2>
+      <p class="curtain-caption" id="curtain-caption">PREPARING THE WONDERLAND&hellip;</p>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="wrap header-top">
+      <div class="brand">
+        <div class="brand-logo-frame">
+          <img id="header-logo" src="assets/images/StilletosLogo.jpeg" alt="Stilletos brand logo">
+        </div>
+        <div>
+          <span class="brand-name" id="header-brand-name">Stilletos Decor</span>
+          <span class="brand-sub" id="header-brand-sub">Styling &amp; Rentals</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="icon-btn cart-trigger" aria-label="Open quote cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round" width="19" height="19">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"></path>
+          </svg>
+          <span class="cart-badge" style="display:none">0</span>
+        </button>
+      </div>
+    </div>
+    <div class="header-nav">
+      <div class="wrap">
+        <div class="tab-list no-scrollbar" id="adult-nav-links" data-nav-links="adult">
+          <button type="button" class="tab-btn active" data-tab="services">Services</button>
+          <button type="button" class="tab-btn" data-tab="rentals">Rentals</button>
+          <button type="button" class="tab-btn" data-tab="gallery">Gallery</button>
+        </div>
+        <div class="tab-list no-scrollbar" id="kids-nav-links" data-nav-links="kids" hidden>
+          <button type="button" class="tab-btn active" data-tab="packages">Party Packages</button>
+          <button type="button" class="tab-btn" data-tab="rentals">Kids Rentals</button>
+          <button type="button" class="tab-btn" data-tab="gallery">Kids Gallery</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============================= ADULT SITE ============================= -->
+    <section id="adult-site" class="site-panel active">
+
+      <section class="a-hero">
+        <div class="a-hero-bg"><img src="assets/images/adult-hero.jpeg" alt="Elegant black and gold table styling"
+            referrerpolicy="no-referrer"></div>
+        <div class="a-hero-content">
+          <span class="a-eyebrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z" />
+            </svg>
+            Bespoke Event Styling | Est. 2018
+          </span>
+          <h1 class="a-title">Elegance in every <span>stitched detail.</span></h1>
+          <p class="a-subtitle">Designing unforgettable moments for social gatherings, milestones, and intimate
+            celebrations. We curate signature high-end rentals and striking custom tablescapes tailored to your vision.
+          </p>
+          <div class="a-hero-actions">
+            <button type="button" class="btn btn-gold" data-goto-tab-hero="services">Explore Services</button>
+            <button type="button" class="btn btn-outline-gold" data-goto-tab-hero="rentals">Browse Equipment
+              Rentals</button>
+          </div>
+        </div>
+      </section>
+
+      <div id="adult-content" class="wrap a-section">
+        <div id="a-panel-services" class="tab-panel active"></div>
+        <div id="a-panel-rentals" class="tab-panel"></div>
+        <div id="a-panel-gallery" class="tab-panel"></div>
+      </div>
+
+    </section>
+
+    <!-- ============================= KIDS SITE ============================= -->
+    <section id="kids-site" class="site-panel">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+
+      <section class="k-hero">
+        <div class="k-hero-bg"><img src="assets/images/kids-gallery-14.jpeg" alt="Whimsical kids party setup"
+            referrerpolicy="no-referrer"></div>
+        <div id="bubble-field" class="bubble-field" aria-hidden="true"></div>
+        <div class="k-hero-content">
+          <span class="k-eyebrow">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5.8 11.3L2 22l10.7-3.8" />
+              <path d="M4 3h.01" />
+              <path d="M22 8h.01" />
+              <path d="M15 2h.01" />
+              <path d="M22 20h.01" />
+              <path
+                d="M22 2l-2.24.75a2.9 2.9 0 00-1.96 3.12v0c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10" />
+              <path d="M11 13l1.62-1.62" />
+            </svg>
+            Welcome to Stilletos Kids!
+          </span>
+          <h1 class="k-title">Whimsical <span class="accent">Wonderlands</span></h1>
+          <p class="k-subtitle">We plan, style, and deliver breathtaking themed kiddie party packages with custom decor,
+            inflatable castles, and mini cabanas in Rustenburg!</p>
+          <div class="k-hero-actions">
+            <button type="button" class="btn-pink" data-goto-tab-hero="packages">View Party Packages</button>
+            <button type="button" class="btn-white" data-goto-tab-hero="rentals">Kids Equipment Rentals</button>
+          </div>
+        </div>
+      </section>
+
+      <div id="kids-content" class="wrap k-section">
+        <div id="k-panel-packages" class="tab-panel active"></div>
+        <div id="k-panel-rentals" class="tab-panel"></div>
+        <div id="k-panel-gallery" class="tab-panel"></div>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-grid">
+
+        <div class="footer-brand">
+          <div class="footer-brand-row">
+            <div class="footer-logo"><img id="footer-logo" src="assets/images/StilletosLogo.jpeg" alt="Stilletos logo">
+            </div>
+            <span class="footer-brand-title" id="footer-brand-title">Stilletos Decor</span>
+          </div>
+          <p class="footer-blurb">Rustenburg's premier design studio crafting exquisite social event visual experiences,
+            high-end tablescapes, customized decor, and bespoke themed packages for premium kids' events.</p>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z">
+              </path>
+            </svg>
+            <span>067 659 5756</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16v16H4z" opacity="0"></path>
+              <path d="M22 6l-10 7L2 6"></path>
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            </svg>
+            <span>cafenetwork1@gmail.com</span>
+          </div>
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span>397 Matshelapata, Chaneng, Rustenburg, 0310</span>
+          </div>
+        </div>
+
+        <div class="footer-links">
+          <h4 class="footer-heading">Our Specialties</h4>
+          <ul>
+            <li>Bespoke Social Events</li>
+            <li>High-End Table Settings</li>
+            <li>Premium Furniture Hire</li>
+            <li>Boutique Cabana Setups</li>
+            <li>Themed Kids Celebrations</li>
+            <li>Premium Castle Rentals</li>
+          </ul>
+        </div>
+
+        <div class="footer-social">
+          <h4 class="footer-heading">Connect With Us</h4>
+          <p class="footer-blurb">Experience our stunning event transformations on TikTok, and browse curated galleries
+            of our real-world setups on Instagram and Facebook.</p>
+          <div class="social-row">
+            <a class="social-btn" href="https://www.tiktok.com/@stilletos_decor?_r=1&_t=ZS-983eawvylFw" target="_blank"
+              rel="noreferrer" title="TikTok" aria-label="TikTok">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M16 3c.3 2 1.7 3.6 4 4v3.2c-1.5 0-2.9-.4-4-1.2v6.4A5.6 5.6 0 1110.6 9.8v3.3a2.4 2.4 0 102 2.36V3z" />
+              </svg>
+            </a>
+            <a class="social-btn" href="https://www.instagram.com/stilletos_decor/" target="_blank" rel="noreferrer"
+              title="Instagram" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="5"></rect>
+                <circle cx="12" cy="12" r="4"></circle>
+                <circle cx="17.5" cy="6.5" r="1"></circle>
+              </svg>
+            </a>
+            <a class="social-btn" href="https://www.facebook.com/share/1HhN3jWGQf/" target="_blank" rel="noreferrer"
+              title="Facebook" aria-label="Facebook">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M13.5 21v-8h2.7l.4-3.3h-3.1V7.6c0-.9.3-1.6 1.7-1.6h1.6V3.1C16.5 3 15.4 3 14.2 3c-2.6 0-4.4 1.6-4.4 4.5v2.2H7v3.3h2.8V21z" />
+              </svg>
+            </a>
+            <a class="social-btn"
+              href="https://wa.me/27676595756?text=Hi%20Stilletos%20Decor,%20I%27d%20like%20to%20inquire%20about%20your%20services."
+              target="_blank" rel="noreferrer" title="WhatsApp" aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.6 14.3c-.2.7-1.4 1.3-2 1.4-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.2-.3.5-.4.7-.4h.5c.2 0 .4 0 .6.4.2.5.7 1.8.8 1.9.1.2.1.3 0 .5-.1.2-.2.3-.3.5-.2.2-.3.3-.5.5-.2.2-.3.4-.1.7.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.5 1.6.3.1.5.1.6-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1l1.7.8c.2.1.4.2.4.3.1.3.1.9-.1 1.6z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <h4 class="footer-map-heading">Our Depot Location in Chaneng, Rustenburg</h4>
+      <div class="location-card">
+        <div class="location-info">
+          <span class="location-eyebrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="2" x2="12" y2="22"></line>
+              <path d="M2 12h20"></path>
+            </svg>
+            Our Location
+          </span>
+          <h3 class="location-title">Visit Our Head Office</h3>
+          <p class="location-desc">Stilletos Decor is proudly located in Chaneng, near Rustenburg in the North West
+            province. We service Rustenburg and surrounding communities with premium custom setups.</p>
+
+          <div class="location-detail">
+            <span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg></span>
+            <div>
+              <div class="location-detail-label">Address</div>
+              <div class="location-detail-value">397 Matshelapata, Chaneng, Rustenburg, 0310</div>
+            </div>
+          </div>
+          <div class="location-detail">
+            <span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z">
+                </path>
+              </svg></span>
+            <div>
+              <div class="location-detail-label">Call / WhatsApp</div>
+              <div class="location-detail-value">067 659 5756</div>
+            </div>
+          </div>
+          <div class="location-detail">
+            <span class="icon-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 6l-10 7L2 6"></path>
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              </svg></span>
+            <div>
+              <div class="location-detail-label">Email Address</div>
+              <div class="location-detail-value">cafenetwork1@gmail.com</div>
+            </div>
+          </div>
+
+          <a class="directions-btn"
+            href="https://www.google.com/maps/dir/?api=1&destination=House+No,+Stilletos+Decor,+397+Matshelapata,+Chaneng,+Rustenburg,+0310"
+            target="_blank" rel="noreferrer">Get Directions on Google Maps</a>
+        </div>
+        <div class="location-map-frame">
+          <iframe src="https://maps.google.com/maps?q=-25.4118433,27.126436&t=&z=16&ie=UTF8&iwloc=&output=embed"
+            loading="lazy" referrerpolicy="no-referrer" title="Stilletos Decor location map"></iframe>
+          <div class="map-pin-tag"><span class="map-pin-dot"></span>Stilletos Decor, Chaneng</div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2026 Stilletos Decor &amp; Catering. All rights reserved. Located in Chaneng, Rustenburg, South Africa.</p>
+        <div class="footer-badges">
+          <span class="footer-badge">Premium Catering</span>
+          <span class="footer-badge">Elegant Decor</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING EXPERIENCE TOGGLE -->
+  <div class="toggle-wrap">
+    <div class="toggle-hint">
+      <small id="toggle-hint-small">Go to Kids Parties</small>
+      <strong id="toggle-hint-strong">Stilletos Kids</strong>
+    </div>
+    <button type="button" id="experience-toggle" class="toggle-btn" title="Switch to Kids Party Planner">
+      <img id="toggle-btn-img" src="assets/images/StilletosKidsLogo.jpeg" alt="Toggle site experience">
+    </button>
+  </div>
+
+  <!-- CART DRAWER -->
+  <div id="cart-backdrop" class="cart-backdrop"></div>
+  <aside id="cart-drawer" class="cart-drawer" aria-label="Quote cart">
+    <div class="cart-header">
+      <div class="cart-header-title">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 01-8 0"></path>
+        </svg>
+        <span>Inquiry Cart</span>
+      </div>
+      <button type="button" id="cart-close-btn" class="cart-close-btn" aria-label="Close cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div id="cart-list" class="cart-list"></div>
+    <div id="cart-footer" class="cart-footer" style="display:none">
+      <div class="cart-summary-row"><span>Total Distinct Items</span><strong id="cart-distinct-count">0</strong></div>
+      <div class="cart-summary-row"><span>Total Items</span><strong id="cart-total-count">0</strong></div>
+      <div class="cart-actions">
+        <button type="button" id="cart-clear-btn" class="cart-clear-btn">Clear All</button>
+        <a id="cart-whatsapp-link" class="cart-submit-btn" href="#" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+          Submit via WA
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- GALLERY LIGHTBOX -->
+  <div id="lightbox-overlay" class="lightbox-overlay" role="dialog" aria-modal="true" aria-label="Media preview">
+    <div class="lightbox-inner">
+      <button type="button" id="lightbox-close" class="lightbox-close-btn" aria-label="Close preview">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div id="lightbox-stage" class="lightbox-stage"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/lightbox.js"></script>
+  <script src="js/adult-site.js"></script>
+  <script src="js/kids-site.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
