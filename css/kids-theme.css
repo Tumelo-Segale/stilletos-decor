@@ -7,18 +7,27 @@
   color: var(--k-text);
   position: relative;
   overflow: hidden;
+  /* Establishes a local stacking context so the -1/0/1/2 z-index layers
+       below (hero image -> blobs -> bubbles -> content) are scoped inside
+       this section. Without this, #kids-site is "positioned" but has no
+       z-index of its own, so it never forms a real stacking context; its
+       own opaque background then paints as a level-0 positioned box *after*
+       the z-index:-1 hero image (which escapes up to the document root and
+       paints earlier), completely covering the photo instead of sitting
+       behind it. */
+  isolation: isolate;
 }
 
 /* ---------- Floating bubble field ----------
-           Direct child of #kids-site (not just the hero), positioned inset:0
-           against it, so the field spans the entire kids experience — from
-           where the footer begins (bottom of #kids-site) up to the hero top —
-           and is clipped away by #kids-site's own overflow:hidden.
-           Stacking order (back to front): hero image (z:-1) -> decorative
-           blobs (z:0) -> bubbles (z:1) -> hero text & page content (z:2). The
-           hero no longer isolates its own stacking context, so bubbles float
-           in front of the hero photo while text/cards stay fully readable
-           on top. */
+             Direct child of #kids-site (not just the hero), positioned inset:0
+             against it, so the field spans the entire kids experience — from
+             where the footer begins (bottom of #kids-site) up to the hero top —
+             and is clipped away by #kids-site's own overflow:hidden.
+             Stacking order (back to front): hero image (z:-1) -> decorative
+             blobs (z:0) -> bubbles (z:1) -> hero text & page content (z:2). The
+             hero no longer isolates its own stacking context, so bubbles float
+             in front of the hero photo while text/cards stay fully readable
+             on top. */
 .bubble-field {
   position: absolute;
   inset: 0;
@@ -61,8 +70,8 @@
   }
   100% {
     /* Travels the full measured height of the bubble field (set as a CSS
-           var by JS), so bubbles reliably reach the hero at the top instead of
-           stalling partway up a page taller than one viewport. */
+             var by JS), so bubbles reliably reach the hero at the top instead of
+             stalling partway up a page taller than one viewport. */
     transform: translateY(calc(-1 * var(--rise))) scale(1.25) rotate(360deg);
     opacity: 0;
   }
