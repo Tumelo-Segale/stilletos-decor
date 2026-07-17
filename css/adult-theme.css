@@ -377,11 +377,6 @@
 @media (max-width: 600px) {
   .gallery-frame {
     padding: 6px;
-    margin-left: -16px;
-    margin-right: -16px;
-    border-left: 0;
-    border-right: 0;
-    border-radius: 0;
     max-width: none;
   }
   .gallery-grid {
