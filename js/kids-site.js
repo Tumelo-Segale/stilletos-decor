@@ -267,7 +267,7 @@ window.STILLETOS_KIDS = (function () {
       src +
       '" alt="' +
       label +
-      '" loading="lazy" referrerpolicy="no-referrer">'
+      '" loading="lazy" decoding="async" referrerpolicy="no-referrer">'
     );
   }
 

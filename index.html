@@ -10,6 +10,12 @@
     content="Rustenburg's premier event styling studio. Bespoke black-and-gold decor for adult celebrations and whimsical themed party packages for kids, based in Chaneng.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- These two are the only images visible the instant the page paints
+       (header logo + the default adult hero photo), so we kick off their
+       fetch as early as possible, in parallel with the CSS/font requests,
+       instead of waiting for the parser to reach the <img> tags below. -->
+  <link rel="preload" as="image" href="assets/images/StilletosLogo.jpeg" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/images/adult-hero.jpeg" fetchpriority="high">
   <link
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Jost:wght@300;400;500;600&family=Baloo+2:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap"
     rel="stylesheet">
@@ -37,7 +43,8 @@
     <div class="wrap header-top">
       <div class="brand">
         <div class="brand-logo-frame">
-          <img id="header-logo" src="assets/images/StilletosLogo.jpeg" alt="Stilletos brand logo">
+          <img id="header-logo" src="assets/images/StilletosLogo.jpeg" alt="Stilletos brand logo" loading="eager"
+            fetchpriority="high" decoding="async">
         </div>
         <div>
           <span class="brand-name" id="header-brand-name">Stilletos Decor</span>
@@ -56,7 +63,7 @@
         <div class="tab-list no-scrollbar" id="kids-nav-links" data-nav-links="kids" hidden>
           <button type="button" class="tab-btn active" data-tab="packages">Party Packages</button>
           <button type="button" class="tab-btn" data-tab="rentals">Kids Rentals</button>
-          <button type="button" class="tab-btn" data-tab="outfits">Outfit Rentals</button>
+          <button type="button" class="tab-btn" data-tab="outfits">Outfits Rentals</button>
           <button type="button" class="tab-btn" data-tab="gallery">Kids Gallery</button>
         </div>
       </nav>
@@ -106,13 +113,13 @@
 
       <section class="a-hero">
         <div class="a-hero-bg"><img src="assets/images/adult-hero.jpeg" alt="Elegant black and gold table styling"
-            referrerpolicy="no-referrer"></div>
+            referrerpolicy="no-referrer" loading="eager" fetchpriority="high" decoding="async"></div>
         <div class="a-hero-content">
           <span class="a-eyebrow">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z" />
             </svg>
-            Tailored Event Styling | Est. 2018
+            Bespoke Event Styling | Est. 2018
           </span>
           <h1 class="a-title">Elegance in every <span>stitched detail.</span></h1>
           <p class="a-subtitle">Designing unforgettable moments for social gatherings, milestones, and intimate
@@ -143,7 +150,7 @@
 
       <section class="k-hero">
         <div class="k-hero-bg"><img src="assets/images/kids-gallery-14.jpeg" alt="Whimsical kids party setup"
-            referrerpolicy="no-referrer"></div>
+            referrerpolicy="no-referrer" loading="lazy" decoding="async"></div>
         <div class="k-hero-content">
           <span class="k-eyebrow">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -185,12 +192,12 @@
 
         <div class="footer-brand">
           <div class="footer-brand-row">
-            <div class="footer-logo"><img id="footer-logo" src="assets/images/StilletosLogo.jpeg" alt="Stilletos logo">
-            </div>
+            <div class="footer-logo"><img id="footer-logo" src="assets/images/StilletosLogo.jpeg" alt="Stilletos logo"
+                loading="lazy" decoding="async"></div>
             <span class="footer-brand-title" id="footer-brand-title">Stilletos Decor</span>
           </div>
           <p class="footer-blurb">Rustenburg's premier design studio crafting exquisite social event visual experiences,
-            high-end tablescapes, customized decor, and tailored themed packages for premium kids' events.</p>
+            high-end tablescapes, customized decor, and bespoke themed packages for premium kids' events.</p>
           <div class="footer-contact-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path
@@ -219,7 +226,7 @@
         <div class="footer-links">
           <h4 class="footer-heading">Our Specialties</h4>
           <ul>
-            <li>Tailored Social Events</li>
+            <li>Bespoke Social Events</li>
             <li>High-End Table Settings</li>
             <li>Premium Furniture Hire</li>
             <li>Boutique Cabana Setups</li>
@@ -342,7 +349,7 @@
       <strong id="toggle-hint-strong">Stilletos Kids</strong>
     </div>
     <button type="button" id="experience-toggle" class="toggle-btn" title="Switch to Kids Party Planner">
-      <img id="toggle-btn-img" src="assets/images/StilletosKidsLogo.jpeg" alt="Toggle site experience">
+      <img id="toggle-btn-img" src="assets/images/StilletosKidsLogo.jpeg" alt="Toggle site experience" decoding="async">
     </button>
   </div>
 

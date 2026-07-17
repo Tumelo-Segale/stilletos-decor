@@ -29,12 +29,14 @@ window.STILLETOS_LIGHTBOX = (function () {
       el.volume = 0;
       el.controls = true;
       el.playsInline = true;
+      el.preload = "auto";
       el.setAttribute("aria-label", label || "Preview video");
     } else {
       el = document.createElement("img");
       el.src = src;
       el.alt = label || "Preview image";
       el.referrerPolicy = "no-referrer";
+      el.decoding = "async";
     }
     stage.appendChild(el);
 

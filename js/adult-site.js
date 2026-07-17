@@ -25,7 +25,7 @@ window.STILLETOS_ADULT = (function () {
         svc.image +
         '" alt="' +
         svc.title +
-        '" loading="lazy" referrerpolicy="no-referrer"></div>' +
+        '" loading="lazy" decoding="async" referrerpolicy="no-referrer"></div>' +
         '<div class="service-body">' +
         "<div><h3>" +
         svc.title +
@@ -116,7 +116,7 @@ window.STILLETOS_ADULT = (function () {
       src +
       '" alt="' +
       label +
-      '" loading="lazy" referrerpolicy="no-referrer">'
+      '" loading="lazy" decoding="async" referrerpolicy="no-referrer">'
     );
   }
 
