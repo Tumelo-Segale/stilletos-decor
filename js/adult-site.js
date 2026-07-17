@@ -4,8 +4,8 @@
 
 window.STILLETOS_ADULT = (function () {
   const DATA = window.STILLETOS_DATA;
-  let galleryTimer = null;
-  let galleryIndex = 0;
+  let tileTimers = [];
+  const tileOffsets = {};
 
   function svgCheck() {
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"></path></svg>';
@@ -143,44 +143,53 @@ window.STILLETOS_ADULT = (function () {
     );
   }
 
+  // Each tile schedules its own next swap on a randomized delay and
+  // reschedules itself after fading, so tiles change independently instead
+  // of every tile fading in lockstep on one shared tick.
+  function scheduleTileSwap(wrap, i) {
+    const delay = 8000 + Math.random() * 6000;
+    const timer = setTimeout(() => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        scheduleTileSwap(wrap, i);
+        return;
+      }
+      tileOffsets[i] = (tileOffsets[i] || 0) + 1;
+      const src =
+        DATA.ADULT_GALLERY_IMAGES[
+          (i + tileOffsets[i]) % DATA.ADULT_GALLERY_IMAGES.length
+        ];
+      const current = wrap.querySelector(".gallery-media");
+      if (current) current.classList.add("media-fade-out");
+      const swapTimer = setTimeout(() => {
+        wrap.innerHTML = mediaTag(src, i);
+        const next = wrap.querySelector(".gallery-media");
+        if (next) {
+          next.classList.add("media-fade-pending");
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              next.classList.remove("media-fade-pending");
+            });
+          });
+        }
+        scheduleTileSwap(wrap, i);
+      }, 1500);
+      tileTimers.push(swapTimer);
+    }, delay);
+    tileTimers.push(timer);
+  }
+
   function startGalleryCycle() {
     stopGalleryCycle();
-    const reduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-    if (reduced) return;
-    galleryTimer = setInterval(() => {
-      galleryIndex = (galleryIndex + 1) % DATA.ADULT_GALLERY_IMAGES.length;
-      document
-        .querySelectorAll("#adult-site [data-gallery-tile-wrap]")
-        .forEach((wrap, i) => {
-          const src =
-            DATA.ADULT_GALLERY_IMAGES[
-              (galleryIndex + i) % DATA.ADULT_GALLERY_IMAGES.length
-            ];
-          const current = wrap.querySelector(".gallery-media");
-          if (current && current.getAttribute("data-src") === src) return;
-
-          if (current) current.classList.add("media-fade-out");
-          setTimeout(() => {
-            wrap.innerHTML = mediaTag(src, i);
-            const next = wrap.querySelector(".gallery-media");
-            if (!next) return;
-            next.classList.add("media-fade-pending");
-            requestAnimationFrame(() => {
-              requestAnimationFrame(() => {
-                next.classList.remove("media-fade-pending");
-              });
-            });
-          }, 1500);
-        });
-    }, 10000);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    document
+      .querySelectorAll("#adult-site [data-gallery-tile-wrap]")
+      .forEach((wrap, i) => {
+        scheduleTileSwap(wrap, i);
+      });
   }
   function stopGalleryCycle() {
-    if (galleryTimer) {
-      clearInterval(galleryTimer);
-      galleryTimer = null;
-    }
+    tileTimers.forEach((t) => clearTimeout(t));
+    tileTimers = [];
   }
 
   function bindGalleryClicks(root) {

@@ -58,7 +58,7 @@ body.experience-kids .cart-header {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 700;
 }
 .cart-header-title svg {
@@ -128,12 +128,12 @@ body.experience-kids .cart-empty-icon {
   height: 28px;
 }
 .cart-empty p:first-of-type {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   margin-bottom: 6px;
 }
 .cart-empty p:last-of-type {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .cart-item {
@@ -147,13 +147,13 @@ body.experience-kids .cart-item {
   background: #fff;
 }
 .cart-item-name {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   margin-bottom: 4px;
 }
 .cart-item-tag {
   display: inline-block;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   padding: 2px 8px;
   border-radius: 3px;
@@ -166,7 +166,7 @@ body.experience-kids .cart-item-tag {
   color: var(--k-purple);
 }
 .cart-item-price {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--a-gold);
   font-weight: 600;
   margin-bottom: 6px;
@@ -216,7 +216,7 @@ body.experience-kids .qty-control button:hover {
 .qty-value {
   min-width: 30px;
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
 }
 .cart-item-delete {
@@ -249,7 +249,7 @@ body.experience-kids .cart-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 12px;
+  font-size: 14px;
   margin-bottom: 8px;
   opacity: 0.85;
 }
@@ -266,7 +266,7 @@ body.experience-kids .cart-footer {
   padding: 12px;
   border-radius: var(--radius);
   border: 1px solid #26221a;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--a-text-dim);
 }
@@ -289,7 +289,7 @@ body.experience-kids .cart-clear-btn:hover {
   border-radius: var(--radius);
   background: #16a34a;
   color: #fff;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
 }
 .cart-submit-btn:hover {
@@ -313,7 +313,7 @@ body.experience-kids .cart-clear-btn:hover {
   border: 1px solid var(--a-gold-dim);
   padding: 12px 20px;
   border-radius: var(--radius);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
   display: flex;
   align-items: center;

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stilletos Decor & Catering | Rustenburg Event Styling &amp; Kids Parties</title>
+  <title>Stilletos Decor & Catering</title>
   <link rel="shortcut icon" href="assets/images/StilletosLogo.jpeg" type="image/x-icon">
   <meta name="description"
     content="Rustenburg's premier event styling studio. Bespoke black-and-gold decor for adult celebrations and whimsical themed party packages for kids, based in Chaneng.">
@@ -44,7 +44,33 @@
           <span class="brand-sub" id="header-brand-sub">Styling &amp; Rentals</span>
         </div>
       </div>
+      <!-- On desktop this sits inline between the brand and the header icons;
+           on mobile it stays empty (display:none) and JS relocates the same
+           #adult-nav-links / #kids-nav-links elements into the sidebar instead. -->
+      <nav class="header-nav" id="header-nav-slot" aria-label="Primary">
+        <div class="tab-list no-scrollbar" id="adult-nav-links" data-nav-links="adult">
+          <button type="button" class="tab-btn active" data-tab="services">Services</button>
+          <button type="button" class="tab-btn" data-tab="rentals">Rentals</button>
+          <button type="button" class="tab-btn" data-tab="gallery">Gallery</button>
+        </div>
+        <div class="tab-list no-scrollbar" id="kids-nav-links" data-nav-links="kids" hidden>
+          <button type="button" class="tab-btn active" data-tab="packages">Party Packages</button>
+          <button type="button" class="tab-btn" data-tab="rentals">Kids Rentals</button>
+          <button type="button" class="tab-btn" data-tab="outfits">Outfit Rentals</button>
+          <button type="button" class="tab-btn" data-tab="gallery">Kids Gallery</button>
+        </div>
+      </nav>
+
       <div class="header-actions">
+        <button type="button" class="icon-btn nav-hamburger" id="nav-hamburger" aria-label="Open menu"
+          aria-expanded="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
         <button type="button" class="icon-btn cart-trigger" aria-label="Open quote cart">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
             stroke-linejoin="round" width="19" height="19">
@@ -56,21 +82,23 @@
         </button>
       </div>
     </div>
-    <div class="header-nav">
-      <div class="wrap">
-        <div class="tab-list no-scrollbar" id="adult-nav-links" data-nav-links="adult">
-          <button type="button" class="tab-btn active" data-tab="services">Services</button>
-          <button type="button" class="tab-btn" data-tab="rentals">Rentals</button>
-          <button type="button" class="tab-btn" data-tab="gallery">Gallery</button>
-        </div>
-        <div class="tab-list no-scrollbar" id="kids-nav-links" data-nav-links="kids" hidden>
-          <button type="button" class="tab-btn active" data-tab="packages">Party Packages</button>
-          <button type="button" class="tab-btn" data-tab="rentals">Kids Rentals</button>
-          <button type="button" class="tab-btn" data-tab="gallery">Kids Gallery</button>
-        </div>
-      </div>
-    </div>
   </header>
+
+  <!-- MOBILE NAV SIDEBAR -->
+  <div id="nav-sidebar-backdrop" class="nav-sidebar-backdrop"></div>
+  <aside id="nav-sidebar" class="nav-sidebar" aria-label="Site navigation">
+    <div class="nav-sidebar-header">
+      <span class="nav-sidebar-title">Menu</span>
+      <button type="button" id="nav-sidebar-close" class="cart-close-btn" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div id="nav-sidebar-links" class="nav-sidebar-links"></div>
+  </aside>
 
   <main>
     <!-- ============================= ADULT SITE ============================= -->
@@ -84,7 +112,7 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8z" />
             </svg>
-            Bespoke Event Styling | Est. 2018
+            Tailored Event Styling | Est. 2018
           </span>
           <h1 class="a-title">Elegance in every <span>stitched detail.</span></h1>
           <p class="a-subtitle">Designing unforgettable moments for social gatherings, milestones, and intimate
@@ -108,6 +136,7 @@
 
     <!-- ============================= KIDS SITE ============================= -->
     <section id="kids-site" class="site-panel">
+      <div id="bubble-field" class="bubble-field" aria-hidden="true"></div>
       <div class="blob blob-1"></div>
       <div class="blob blob-2"></div>
       <div class="blob blob-3"></div>
@@ -115,7 +144,6 @@
       <section class="k-hero">
         <div class="k-hero-bg"><img src="assets/images/kids-gallery-14.jpeg" alt="Whimsical kids party setup"
             referrerpolicy="no-referrer"></div>
-        <div id="bubble-field" class="bubble-field" aria-hidden="true"></div>
         <div class="k-hero-content">
           <span class="k-eyebrow">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -143,6 +171,7 @@
       <div id="kids-content" class="wrap k-section">
         <div id="k-panel-packages" class="tab-panel active"></div>
         <div id="k-panel-rentals" class="tab-panel"></div>
+        <div id="k-panel-outfits" class="tab-panel"></div>
         <div id="k-panel-gallery" class="tab-panel"></div>
       </div>
 
@@ -161,7 +190,7 @@
             <span class="footer-brand-title" id="footer-brand-title">Stilletos Decor</span>
           </div>
           <p class="footer-blurb">Rustenburg's premier design studio crafting exquisite social event visual experiences,
-            high-end tablescapes, customized decor, and bespoke themed packages for premium kids' events.</p>
+            high-end tablescapes, customized decor, and tailored themed packages for premium kids' events.</p>
           <div class="footer-contact-item">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path
@@ -190,7 +219,7 @@
         <div class="footer-links">
           <h4 class="footer-heading">Our Specialties</h4>
           <ul>
-            <li>Bespoke Social Events</li>
+            <li>Tailored Social Events</li>
             <li>High-End Table Settings</li>
             <li>Premium Furniture Hire</li>
             <li>Boutique Cabana Setups</li>

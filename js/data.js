@@ -179,7 +179,7 @@ window.STILLETOS_DATA = (function () {
       image: "assets/images/srv-3.jpeg",
     },
     {
-      id: "srv-4",
+      id: "srv-2",
       title: "Premium Equipment Hire",
       description:
         "An exclusive collection of pristine tablescape assets, gorgeous seating, structures, and service-ready items for food service setup.",
@@ -189,8 +189,7 @@ window.STILLETOS_DATA = (function () {
         "Custom backdrops, balloon rings, and stage platform elements",
         "Professional cleaning and quality-inspected item delivery",
       ],
-      image:
-        "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=600&q=80",
+      image: "assets/images/srv-2.jpeg",
     },
   ];
 
@@ -213,6 +212,7 @@ window.STILLETOS_DATA = (function () {
         "Printing - Full Backdrop Sticker + Stickers 2x2",
         "Themed Party Pack Stand",
         "Beautiful Mini Candy Cart",
+        "White Jumping Castle (3x3m)",
         "Elegant Plates, Glasses & Cutlery matching the theme",
         "Custom Creative Centerpieces",
         "Custom Branded Bottled Water",
@@ -250,12 +250,6 @@ window.STILLETOS_DATA = (function () {
 
   const KIDS_EXTRAS = [
     {
-      name: "White Jumping Castle",
-      badge: "Active Inflatable",
-      desc: "Add a modern sleek aesthetic that matches any customized colors perfectly.",
-      price: "R1 200",
-    },
-    {
       name: "Bubble House",
       badge: "Premium Visual",
       desc: "An incredible transparent inflatable balloon house for beautiful photographs.",
@@ -266,6 +260,57 @@ window.STILLETOS_DATA = (function () {
       badge: "Table Decor",
       desc: "Replace faux elements with fragrant, gorgeous color-matched flowers.",
       price: "R1 000",
+    },
+  ];
+
+  const KIDS_OUTFITS = [
+    {
+      id: "outfit-1",
+      name: "Princess Ball Gown",
+      category: "outfit",
+      price: "R180 / day",
+      description:
+        "Sparkling layered tulle ball gown with matching tiara, available in blush, lilac, and sky blue. Sizes 2-10 years.",
+    },
+    {
+      id: "outfit-2",
+      name: "Superhero Costume Set",
+      category: "outfit",
+      price: "R150 / day",
+      description:
+        "Padded muscle-chest superhero costume with cape and mask. Great for photo booths and party entrances.",
+    },
+    {
+      id: "outfit-3",
+      name: "Fairy Tale Tutu Dress",
+      category: "outfit",
+      price: "R120 / day",
+      description:
+        "Soft layered tutu with flower crown, perfect for garden and fairy themed parties. Sizes 1-8 years.",
+    },
+    {
+      id: "outfit-4",
+      name: "Little Prince Suit",
+      category: "outfit",
+      price: "R160 / day",
+      description:
+        "Sharp tailored waistcoat and bow-tie set for the birthday boy or ring bearer, sizes 2-10 years.",
+    },
+    {
+      id: "outfit-5",
+      name: "Animal Onesie Costume",
+      category: "outfit",
+      price: "R100 / day",
+      description:
+        "Cuddly lion, unicorn, or dinosaur onesie costumes, ideal for younger guests and themed photo sessions.",
+    },
+    {
+      id: "outfit-6",
+      name: "Cowboy & Cowgirl Outfit",
+      category: "outfit",
+      price: "R130 / day",
+      description:
+        "Vest, hat, and bandana set for western and rodeo themed celebrations, sizes 3-10 years.",
     },
   ];
 
@@ -294,7 +339,7 @@ window.STILLETOS_DATA = (function () {
   ];
 
   const KIDS_GALLERY_IMAGES = [
-    "assets/images/kids-gallery-1.mp4",
+    "assets/images/kids-gallery-1.jpeg",
     "assets/images/kids-gallery-2.jpeg",
     "assets/images/kids-gallery-3.jpeg",
     "assets/images/kids-gallery-4.jpeg",
@@ -302,7 +347,7 @@ window.STILLETOS_DATA = (function () {
     "assets/images/kids-gallery-6.jpeg",
     "assets/images/kids-gallery-7.jpeg",
     "assets/images/kids-gallery-8.jpeg",
-    "assets/images/kids-gallery-9.mp4",
+    "assets/images/kids-gallery-9.jpeg",
     "assets/images/kids-gallery-10.jpeg",
     "assets/images/kids-gallery-11.jpeg",
     "assets/images/kids-gallery-12.jpeg",
@@ -310,14 +355,14 @@ window.STILLETOS_DATA = (function () {
     "assets/images/kids-gallery-14.jpeg",
     "assets/images/kids-gallery-15.jpeg",
     "assets/images/kids-gallery-16.jpeg",
-    "assets/images/kids-gallery-17.mp4",
-    "assets/images/kids-gallery-18.jpeg",
-    "assets/images/kids-gallery-19.jpeg",
-    "assets/images/kids-gallery-20.jpeg",
+    "assets/images/kids-gallery-17.jpeg",
+    "assets/images/kids-gallery-18.mp4",
+    "assets/images/kids-gallery-19.mp4",
+    "assets/images/kids-gallery-20.mp4",
     "assets/images/kids-gallery-21.jpeg",
     "assets/images/kids-gallery-22.jpeg",
     "assets/images/kids-gallery-23.jpeg",
-    "assets/images/kids-gallery-24.jpeg",
+    "assets/images/kids-gallery-24.mp4",
   ];
 
   return {
@@ -327,6 +372,7 @@ window.STILLETOS_DATA = (function () {
     ADULT_SERVICES,
     KIDS_PACKAGES,
     KIDS_EXTRAS,
+    KIDS_OUTFITS,
     ADULT_GALLERY_IMAGES,
     KIDS_GALLERY_IMAGES,
   };

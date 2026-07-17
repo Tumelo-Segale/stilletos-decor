@@ -4,8 +4,8 @@
 
 window.STILLETOS_KIDS = (function () {
   const DATA = window.STILLETOS_DATA;
-  let galleryTimer = null;
-  let galleryIndex = 0;
+  let tileTimers = [];
+  const tileOffsets = {};
   const guestCounts = { glam: "10", standard: "10" };
 
   function svgCheck() {
@@ -21,11 +21,25 @@ window.STILLETOS_KIDS = (function () {
     return '<svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7L2 9.2l7.1-.6z"/></svg>';
   }
 
+  // The bubble field now spans the full kids-site height (footer start to
+  // hero top), which is usually taller than one viewport, so a fixed vh
+  // rise distance would leave bubbles stalling partway up. Measure the
+  // field and set a CSS var each bubble's keyframe reads from instead.
+  function updateBubbleRise() {
+    const field = document.getElementById("bubble-field");
+    const site = document.getElementById("kids-site");
+    if (!field || !site) return;
+    const height = site.offsetHeight;
+    if (height > 0) {
+      field.style.setProperty("--rise", height + 200 + "px");
+    }
+  }
+
   function makeBubbles() {
     const field = document.getElementById("bubble-field");
     if (!field) return;
     let html = "";
-    for (let i = 0; i < 32; i++) {
+    for (let i = 0; i < 40; i++) {
       const size = Math.round(Math.random() * 55 + 15);
       const left = Math.round(Math.random() * 100);
       const delay = (Math.random() * 8).toFixed(2);
@@ -196,6 +210,35 @@ window.STILLETOS_KIDS = (function () {
     );
   }
 
+  function renderOutfits() {
+    const cards = DATA.KIDS_OUTFITS.map(
+      (item) =>
+        '<div class="k-rental-card">' +
+        "<h4>" +
+        item.name +
+        "</h4><p>" +
+        item.description +
+        "</p>" +
+        '<div class="k-rental-footer">' +
+        '<span class="k-rental-price">' +
+        item.price +
+        "</span>" +
+        '<button type="button" class="k-add-btn" data-rental-id="' +
+        item.id +
+        '">' +
+        svgCart() +
+        " Add to Quote</button>" +
+        "</div>" +
+        "</div>"
+    ).join("");
+    return (
+      '<div class="k-section-head"><h2>Outfits &amp; Costume Rentals</h2><p>Adorable dresses, suits, and costumes to complete the look for your little guests.</p></div>' +
+      '<div class="k-rentals-grid">' +
+      cards +
+      "</div>"
+    );
+  }
+
   function isVideoSrc(src) {
     return /\.mp4($|\?)/i.test(src);
   }
@@ -251,41 +294,53 @@ window.STILLETOS_KIDS = (function () {
     );
   }
 
+  // Each tile schedules its own next swap on a randomized delay and
+  // reschedules itself after fading, so tiles change independently instead
+  // of every tile fading in lockstep on one shared tick.
+  function scheduleTileSwap(wrap, i) {
+    const delay = 8000 + Math.random() * 6000;
+    const timer = setTimeout(() => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        scheduleTileSwap(wrap, i);
+        return;
+      }
+      tileOffsets[i] = (tileOffsets[i] || 0) + 1;
+      const src =
+        DATA.KIDS_GALLERY_IMAGES[
+          (i + tileOffsets[i]) % DATA.KIDS_GALLERY_IMAGES.length
+        ];
+      const current = wrap.querySelector(".k-gallery-media");
+      if (current) current.classList.add("media-fade-out");
+      const swapTimer = setTimeout(() => {
+        wrap.innerHTML = mediaTag(src, i);
+        const next = wrap.querySelector(".k-gallery-media");
+        if (next) {
+          next.classList.add("media-fade-pending");
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              next.classList.remove("media-fade-pending");
+            });
+          });
+        }
+        scheduleTileSwap(wrap, i);
+      }, 1500);
+      tileTimers.push(swapTimer);
+    }, delay);
+    tileTimers.push(timer);
+  }
+
   function startGalleryCycle() {
     stopGalleryCycle();
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    galleryTimer = setInterval(() => {
-      galleryIndex = (galleryIndex + 1) % DATA.KIDS_GALLERY_IMAGES.length;
-      document
-        .querySelectorAll("#kids-site [data-kids-gallery-tile-wrap]")
-        .forEach((wrap, i) => {
-          const src =
-            DATA.KIDS_GALLERY_IMAGES[
-              (galleryIndex + i) % DATA.KIDS_GALLERY_IMAGES.length
-            ];
-          const current = wrap.querySelector(".k-gallery-media");
-          if (current && current.getAttribute("data-src") === src) return;
-
-          if (current) current.classList.add("media-fade-out");
-          setTimeout(() => {
-            wrap.innerHTML = mediaTag(src, i);
-            const next = wrap.querySelector(".k-gallery-media");
-            if (!next) return;
-            next.classList.add("media-fade-pending");
-            requestAnimationFrame(() => {
-              requestAnimationFrame(() => {
-                next.classList.remove("media-fade-pending");
-              });
-            });
-          }, 1500);
-        });
-    }, 10000);
+    document
+      .querySelectorAll("#kids-site [data-kids-gallery-tile-wrap]")
+      .forEach((wrap, i) => {
+        scheduleTileSwap(wrap, i);
+      });
   }
   function stopGalleryCycle() {
-    if (galleryTimer) {
-      clearInterval(galleryTimer);
-      galleryTimer = null;
-    }
+    tileTimers.forEach((t) => clearTimeout(t));
+    tileTimers = [];
   }
 
   function bindGalleryClicks(root) {
@@ -341,9 +396,10 @@ window.STILLETOS_KIDS = (function () {
     });
     root.querySelectorAll("[data-rental-id]").forEach((btn) => {
       btn.addEventListener("click", () => {
-        const rental = DATA.KIDS_RENTALS.find(
-          (r) => r.id === btn.getAttribute("data-rental-id")
-        );
+        const id = btn.getAttribute("data-rental-id");
+        const rental =
+          DATA.KIDS_RENTALS.find((r) => r.id === id) ||
+          DATA.KIDS_OUTFITS.find((r) => r.id === id);
         if (rental) window.STILLETOS_CART.addRental(rental);
       });
     });
@@ -365,6 +421,7 @@ window.STILLETOS_KIDS = (function () {
       .forEach((p) => p.classList.toggle("active", p.id === "k-panel-" + tab));
     if (tab === "gallery") startGalleryCycle();
     else stopGalleryCycle();
+    requestAnimationFrame(updateBubbleRise);
   }
 
   function init() {
@@ -374,15 +431,22 @@ window.STILLETOS_KIDS = (function () {
       return;
     }
 
-    makeBubbles();
-
     const packagesPanel = document.getElementById("k-panel-packages");
     const rentalsPanel = document.getElementById("k-panel-rentals");
+    const outfitsPanel = document.getElementById("k-panel-outfits");
     const galleryPanel = document.getElementById("k-panel-gallery");
 
     if (packagesPanel) packagesPanel.innerHTML = renderPackages();
     if (rentalsPanel) rentalsPanel.innerHTML = renderRentals();
+    if (outfitsPanel) outfitsPanel.innerHTML = renderOutfits();
     if (galleryPanel) galleryPanel.innerHTML = renderGallery();
+
+    // Build bubbles only after all panels are in the DOM, so the field's
+    // measured height reflects the real (taller) content, not just the
+    // hero. Re-measure on resize since content height can change.
+    makeBubbles();
+    updateBubbleRise();
+    window.addEventListener("resize", updateBubbleRise);
 
     bindDynamicButtons(site);
 
@@ -407,5 +471,5 @@ window.STILLETOS_KIDS = (function () {
     });
   }
 
-  return { init, startGalleryCycle, stopGalleryCycle };
+  return { init, startGalleryCycle, stopGalleryCycle, updateBubbleRise };
 })();

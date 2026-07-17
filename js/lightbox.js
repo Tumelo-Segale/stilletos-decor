@@ -25,6 +25,8 @@ window.STILLETOS_LIGHTBOX = (function () {
       el.src = src;
       el.autoplay = true;
       el.loop = true;
+      el.muted = true;
+      el.volume = 0;
       el.controls = true;
       el.playsInline = true;
       el.setAttribute("aria-label", label || "Preview video");

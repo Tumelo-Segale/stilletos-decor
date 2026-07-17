@@ -21,6 +21,45 @@
     if (el) el.title = title;
   }
 
+  // ---------- Mobile nav sidebar ----------
+  // Rather than duplicating markup (and click handlers) for a second copy of
+  // the nav links, the real #adult-nav-links / #kids-nav-links elements are
+  // physically relocated between the desktop header row and the mobile
+  // sidebar depending on viewport width. Their existing hidden-toggle logic
+  // (driven by updateHeaderForExperience) keeps working unchanged either way.
+  const desktopNavQuery = window.matchMedia("(min-width: 861px)");
+
+  function relocateNavLinks() {
+    const headerNavSlot = document.getElementById("header-nav-slot");
+    const sidebarLinks = document.getElementById("nav-sidebar-links");
+    const adultLinks = document.getElementById("adult-nav-links");
+    const kidsLinks = document.getElementById("kids-nav-links");
+    if (!headerNavSlot || !sidebarLinks || !adultLinks || !kidsLinks) return;
+
+    const target = desktopNavQuery.matches ? headerNavSlot : sidebarLinks;
+    if (adultLinks.parentElement !== target) target.appendChild(adultLinks);
+    if (kidsLinks.parentElement !== target) target.appendChild(kidsLinks);
+  }
+
+  function openNavSidebar() {
+    const sidebar = document.getElementById("nav-sidebar");
+    const backdrop = document.getElementById("nav-sidebar-backdrop");
+    const hamburger = document.getElementById("nav-hamburger");
+    if (sidebar) sidebar.classList.add("open");
+    if (backdrop) backdrop.classList.add("open");
+    if (hamburger) hamburger.setAttribute("aria-expanded", "true");
+    document.body.classList.add("nav-sidebar-open");
+  }
+  function closeNavSidebar() {
+    const sidebar = document.getElementById("nav-sidebar");
+    const backdrop = document.getElementById("nav-sidebar-backdrop");
+    const hamburger = document.getElementById("nav-hamburger");
+    if (sidebar) sidebar.classList.remove("open");
+    if (backdrop) backdrop.classList.remove("open");
+    if (hamburger) hamburger.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("nav-sidebar-open");
+  }
+
   function updateHeaderForExperience(exp) {
     const isKids = exp === "kids";
     setSrc(
@@ -109,6 +148,8 @@
     isTransitioning = true;
     const next = experience === "adult" ? "kids" : "adult";
 
+    closeNavSidebar();
+
     const curtain = document.getElementById("curtain");
     if (curtain) {
       curtain.classList.remove("to-kids", "to-adult");
@@ -131,6 +172,11 @@
       safeInit("header theming (toggle)", function () {
         updateHeaderForExperience(experience);
       });
+      if (next === "kids" && window.STILLETOS_KIDS) {
+        safeInit("bubble rise recalculation", function () {
+          window.STILLETOS_KIDS.updateBubbleRise();
+        });
+      }
     }, 750);
 
     setTimeout(() => {
@@ -150,11 +196,59 @@
     }
   }
 
+  // ---------- Permanent video mute ----------
+  // 'volumechange' does not bubble, but a capture-phase listener still
+  // fires for it, so this single listener catches every video on the page
+  // (gallery tiles + lightbox), present now or added later.
+  function initForcedMute() {
+    document.addEventListener(
+      "volumechange",
+      (e) => {
+        const el = e.target;
+        if (el instanceof HTMLMediaElement && !el.muted) {
+          el.muted = true;
+        }
+      },
+      true
+    );
+  }
+
+  function initNavSidebar() {
+    relocateNavLinks();
+    if (desktopNavQuery.addEventListener) {
+      desktopNavQuery.addEventListener("change", relocateNavLinks);
+    } else if (desktopNavQuery.addListener) {
+      // Safari < 14 fallback
+      desktopNavQuery.addListener(relocateNavLinks);
+    }
+
+    const hamburger = document.getElementById("nav-hamburger");
+    const closeBtn = document.getElementById("nav-sidebar-close");
+    const backdrop = document.getElementById("nav-sidebar-backdrop");
+    const sidebarLinks = document.getElementById("nav-sidebar-links");
+
+    if (hamburger) hamburger.addEventListener("click", openNavSidebar);
+    if (closeBtn) closeBtn.addEventListener("click", closeNavSidebar);
+    if (backdrop) backdrop.addEventListener("click", closeNavSidebar);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeNavSidebar();
+    });
+    // Close the sidebar once a link inside it is tapped, so picking a
+    // section doesn't leave the drawer sitting open over the page.
+    if (sidebarLinks) {
+      sidebarLinks.addEventListener("click", (e) => {
+        if (e.target.closest(".tab-btn")) closeNavSidebar();
+      });
+    }
+  }
+
   function init() {
     safeInit("cart", window.STILLETOS_CART.init);
     safeInit("lightbox", window.STILLETOS_LIGHTBOX.init);
     safeInit("adult site", window.STILLETOS_ADULT.init);
     safeInit("kids site", window.STILLETOS_KIDS.init);
+    safeInit("nav sidebar", initNavSidebar);
+    safeInit("forced video mute", initForcedMute);
 
     const toggleBtn = document.getElementById("experience-toggle");
     if (toggleBtn) toggleBtn.addEventListener("click", switchExperience);

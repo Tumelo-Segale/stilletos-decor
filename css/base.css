@@ -39,6 +39,8 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -58,6 +60,8 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+  width: 100%;
+  max-width: 100vw;
   font-family: "Jost", -apple-system, sans-serif;
   background: var(--a-bg);
   color: var(--a-text);
@@ -99,9 +103,9 @@ h4 {
 }
 
 /* ---------- Universal interactive feedback ----------
-     Every native <button> plus every anchor styled as a button gets a
-     consistent hover/press transition, so controls always feel responsive
-     even before any component-specific transition rules kick in. */
+             Every native <button> plus every anchor styled as a button gets a
+             consistent hover/press transition, so controls always feel responsive
+             even before any component-specific transition rules kick in. */
 button,
 .btn,
 .social-btn,
@@ -145,7 +149,7 @@ body.experience-kids :focus-visible {
 
 #adult-content,
 #kids-content {
-  scroll-margin-top: 150px;
+  scroll-margin-top: calc(var(--header-h) + 20px);
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -166,8 +170,11 @@ body.experience-kids :focus-visible {
 
 /* ---------- Header ---------- */
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 40;
   display: flex;
   flex-direction: column;
@@ -181,41 +188,52 @@ body.experience-kids .site-header {
   border-bottom-color: #fbcfe8;
 }
 
+/* The header is now taken out of normal flow (position: fixed), so <main>
+       needs matching top padding or hero content would render underneath it.
+       The nav links live inline inside the single header-top row at every
+       breakpoint (desktop: next to the logo/cart icons, mobile: relocated
+       into the sidebar instead), so header-top's own height is always the
+       full header height — no second row to account for. */
+main {
+  padding-top: var(--header-h);
+}
+
 .header-top {
   width: 100%;
   height: var(--header-h);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 20px;
 }
 
-/* ---------- Header nav row (per-experience tab links live here) ---------- */
+/* ---------- Header nav (per-experience tab links) ----------
+       On desktop these sit inline in the same row as the logo and cart icon,
+       centered in the space between them. On mobile the same elements are
+       relocated by JS into the sidebar instead, so this slot stays empty and
+       hidden rather than reserving a second row. */
 .header-nav {
-  border-top: 1px solid var(--a-gold-dim);
-  padding: 10px 0;
-  transition: border-color 0.5s var(--ease);
-}
-body.experience-kids .header-nav {
-  border-top-color: #fbcfe8;
-}
-.header-nav .wrap {
-  display: flex;
+  display: none;
+  flex: 1 1 auto;
+  min-width: 0;
   justify-content: center;
+}
+@media (min-width: 861px) {
+  .header-nav {
+    display: flex;
+  }
 }
 .header-nav .tab-list {
   width: 100%;
   justify-content: center;
-}
-@media (max-width: 640px) {
-  .header-nav .tab-list {
-    justify-content: flex-start;
-  }
 }
 
 .brand {
   display: flex;
   align-items: center;
   gap: 12px;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .brand-logo-frame {
@@ -241,7 +259,7 @@ body.experience-kids .brand-logo-frame {
 
 .brand-name {
   font-family: "Cormorant Garamond", serif;
-  font-size: 15px;
+  font-size: 22px;
   letter-spacing: 3px;
   text-transform: uppercase;
   color: var(--a-gold);
@@ -256,7 +274,7 @@ body.experience-kids .brand-name {
   text-transform: none;
 }
 .brand-sub {
-  font-size: 10px;
+  font-size: 14px;
   letter-spacing: 2px;
   text-transform: uppercase;
   opacity: 0.6;
@@ -264,10 +282,38 @@ body.experience-kids .brand-name {
   font-weight: 500;
 }
 
+/* On narrow phones the header row runs out of room: logo + two 44px icon
+       buttons + wrap padding leave very little space for the brand text, and
+       "Stilletos Decor" in all-caps serif with wide letter-spacing was
+       overflowing/clipping silently (overflow-x:hidden on body hides the
+       cut-off instead of scrolling to it). Shrink the brand text and let the
+       block truncate gracefully as a last resort instead of overlapping the
+       header actions. */
+@media (max-width: 420px) {
+  .brand-name {
+    font-size: 15px;
+    letter-spacing: 1px;
+  }
+  .brand-sub {
+    font-size: 10px;
+    letter-spacing: 1px;
+  }
+}
+.brand > div {
+  min-width: 0;
+}
+.brand-name,
+.brand-sub {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .header-actions {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-shrink: 0;
 }
 
 .icon-btn {
@@ -296,6 +342,99 @@ body.experience-kids .icon-btn:hover {
   background: #fdf2f8;
 }
 
+/* ---------- Mobile hamburger trigger ----------
+             Hidden on desktop, where nav links live inline in the header row. */
+.nav-hamburger {
+  display: none;
+}
+.nav-hamburger svg {
+  width: 19px;
+  height: 19px;
+}
+@media (max-width: 860px) {
+  .nav-hamburger {
+    display: inline-flex;
+  }
+}
+
+/* ---------- Mobile nav sidebar ----------
+             On mobile, the same #adult-nav-links / #kids-nav-links elements used
+             in the desktop header row are relocated here by JS, so click handlers
+             and the adult/kids hidden-toggle logic keep working unchanged. */
+.nav-sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease);
+}
+.nav-sidebar-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  max-width: 320px;
+  z-index: 56;
+  background: #0d0d0e;
+  color: var(--a-text);
+  border-right: 1px solid #26221a;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 20px 0 50px rgba(0, 0, 0, 0.5);
+  transform: translateX(-100%);
+  transition: transform 0.35s var(--ease);
+}
+.nav-sidebar.open {
+  transform: translateX(0);
+}
+body.experience-kids .nav-sidebar {
+  background: #fdf2f8;
+  color: var(--k-text);
+  border-right-color: #fbcfe8;
+}
+
+.nav-sidebar-header {
+  padding: 22px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #26221a;
+  background: #141412;
+}
+body.experience-kids .nav-sidebar-header {
+  border-bottom-color: #fbcfe8;
+  background: #fff;
+}
+.nav-sidebar-title {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.nav-sidebar-links {
+  padding: 20px;
+  overflow-y: auto;
+}
+.nav-sidebar-links .tab-list {
+  flex-direction: column;
+  overflow-x: visible;
+  gap: 10px;
+  width: 100%;
+}
+.nav-sidebar-links .tab-btn {
+  width: 100%;
+  text-align: left;
+}
+
 .cart-badge {
   position: absolute;
   top: -6px;
@@ -306,7 +445,7 @@ body.experience-kids .icon-btn:hover {
   border-radius: var(--radius);
   background: var(--a-gold);
   color: var(--a-bg);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   display: flex;
   align-items: center;
@@ -323,6 +462,15 @@ body.experience-kids .cart-badge {
   gap: 12px;
   overflow-x: auto;
 }
+/* .tab-list's own `display: flex` is an author rule, so it silently beats
+       the browser's built-in `[hidden] { display: none }` default even though
+       both have equal specificity — author styles always win over UA styles.
+       Without this, #adult-nav-links and #kids-nav-links (both `.tab-list`)
+       would stay visible together at all times regardless of their `hidden`
+       attribute, showing every nav link above both heroes simultaneously. */
+.tab-list[hidden] {
+  display: none;
+}
 .tab-btn {
   flex-shrink: 0;
   padding: 9px 22px;
@@ -331,7 +479,7 @@ body.experience-kids .cart-badge {
   background: transparent;
   color: var(--a-gold);
   font-family: "Cormorant Garamond", serif;
-  font-size: 13px;
+  font-size: 15px;
   letter-spacing: 2px;
   text-transform: uppercase;
   transition: all 0.2s var(--ease);
@@ -447,7 +595,7 @@ body.experience-kids .footer-logo {
 }
 .footer-brand-title {
   font-family: "Cormorant Garamond", serif;
-  font-size: 20px;
+  font-size: 22px;
   letter-spacing: 1px;
   color: var(--a-gold);
 }
@@ -458,7 +606,7 @@ body.experience-kids .footer-brand-title {
 }
 
 .footer-blurb {
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.7;
   opacity: 0.85;
   max-width: 380px;
@@ -469,7 +617,7 @@ body.experience-kids .footer-brand-title {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 13px;
+  font-size: 15px;
   margin-bottom: 10px;
 }
 .footer-contact-item svg {
@@ -483,7 +631,7 @@ body.experience-kids .footer-contact-item svg {
 }
 
 .footer-heading {
-  font-size: 11px;
+  font-size: 13px;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 800;
@@ -491,7 +639,7 @@ body.experience-kids .footer-contact-item svg {
   margin-bottom: 16px;
 }
 .footer-links ul li {
-  font-size: 13px;
+  font-size: 15px;
   opacity: 0.8;
   margin-bottom: 9px;
 }
@@ -536,7 +684,7 @@ body.experience-kids .social-btn:hover {
 
 .footer-map-heading {
   text-align: center;
-  font-size: 13px;
+  font-size: 15px;
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 800;
@@ -553,7 +701,7 @@ body.experience-kids .social-btn:hover {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  font-size: 11px;
+  font-size: 13px;
   opacity: 0.7;
 }
 .footer-badges {
@@ -563,7 +711,7 @@ body.experience-kids .social-btn:hover {
 .footer-badge {
   border: 1px solid var(--a-gold-dim);
   padding: 6px 10px;
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   font-weight: 700;
@@ -596,11 +744,27 @@ body.experience-kids .location-card {
 .location-info {
   padding: 32px;
 }
+/* The location card switches to a white background in the kids theme, but
+         its text color was still inheriting the light pink used on the dark
+         purple footer, making it nearly invisible. Force a solid dark pink. */
+body.experience-kids .location-info {
+  color: var(--k-pink-dark);
+}
+body.experience-kids .location-desc {
+  opacity: 1;
+}
+body.experience-kids .location-detail-label {
+  opacity: 1;
+  color: var(--k-purple-dark);
+}
+body.experience-kids .location-detail-value {
+  color: var(--k-text);
+}
 .location-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -617,7 +781,7 @@ body.experience-kids .location-eyebrow {
 
 .location-title {
   font-family: "Cormorant Garamond", serif;
-  font-size: 22px;
+  font-size: 24px;
   color: var(--a-gold);
   margin-bottom: 12px;
 }
@@ -627,7 +791,7 @@ body.experience-kids .location-title {
 }
 
 .location-desc {
-  font-size: 13px;
+  font-size: 15px;
   line-height: 1.7;
   opacity: 0.8;
   margin-bottom: 22px;
@@ -660,14 +824,14 @@ body.experience-kids .location-detail .icon-chip {
   height: 16px;
 }
 .location-detail-label {
-  font-size: 10px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 1px;
   opacity: 0.55;
   font-weight: 700;
 }
 .location-detail-value {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 600;
 }
 
@@ -680,7 +844,7 @@ body.experience-kids .location-detail .icon-chip {
   width: 100%;
   padding: 13px;
   border-radius: var(--radius);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 800;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -717,7 +881,7 @@ body.experience-kids .location-map-frame iframe {
   background: var(--a-bg);
   border: 1px solid var(--a-gold-dim);
   color: var(--a-gold);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   padding: 8px 12px;
   border-radius: var(--radius);
@@ -750,18 +914,20 @@ body.experience-kids .map-pin-tag {
 .toggle-wrap {
   position: fixed;
   right: 22px;
-  bottom: 22px;
+  top: calc(var(--header-h) + 16px);
+  bottom: auto;
   z-index: 45;
   display: flex;
   align-items: center;
   gap: 12px;
-  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease),
+    top 0.3s var(--ease);
 }
 
 /* The cart drawer's full-screen backdrop (z-index 50) sits above the
-     floating toggle (z-index 45) by design, so it would otherwise swallow
-     clicks meant for the toggle. Hide the toggle while the cart is open
-     instead of leaving a dead, overlapping click target. */
+             floating toggle (z-index 45) by design, so it would otherwise swallow
+             clicks meant for the toggle. Hide the toggle while the cart is open
+             instead of leaving a dead, overlapping click target. */
 body.cart-open .toggle-wrap {
   opacity: 0;
   transform: translateY(12px) scale(0.9);
@@ -784,13 +950,13 @@ body.cart-open .toggle-wrap {
   }
 }
 .toggle-hint small {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   opacity: 0.7;
 }
 .toggle-hint strong {
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: #fff;
@@ -889,7 +1055,7 @@ body.cart-open .toggle-wrap {
   }
 }
 .curtain-title {
-  font-size: 30px;
+  font-size: 32px;
   letter-spacing: 4px;
   text-transform: uppercase;
   margin: 14px 0 6px;
@@ -902,7 +1068,7 @@ body.cart-open .toggle-wrap {
   font-family: "Baloo 2", cursive;
 }
 .curtain-caption {
-  font-size: 11px;
+  font-size: 13px;
   letter-spacing: 3px;
   text-transform: uppercase;
   opacity: 0.85;
@@ -910,7 +1076,8 @@ body.cart-open .toggle-wrap {
 
 /* ---------- Body lock while an overlay is open ---------- */
 body.cart-open,
-body.lightbox-open {
+body.lightbox-open,
+body.nav-sidebar-open {
   overflow: hidden;
 }
 
@@ -962,6 +1129,21 @@ body.lightbox-open {
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
   background: #000;
+}
+
+/* ---------- Videos are always muted, everywhere ----------
+       All gallery/lightbox videos are sound-off by design. Hide the native
+       mute button and volume slider (WebKit/Blink) so there's no visible
+       control that suggests sound can be turned on. Play/pause, scrubbing,
+       and fullscreen controls are untouched. A matching JS listener in app.js
+       forcibly re-mutes any video that somehow becomes unmuted (keyboard
+       shortcuts, browser quirks, etc.) as a backstop for browsers that don't
+       support hiding individual control buttons via CSS. */
+video::-webkit-media-controls-mute-button,
+video::-webkit-media-controls-volume-slider,
+video::-webkit-media-controls-volume-slider-container,
+video::-webkit-media-controls-volume-control-container {
+  display: none !important;
 }
 .lightbox-close-btn {
   position: absolute;
